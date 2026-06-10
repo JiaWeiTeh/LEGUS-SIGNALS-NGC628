@@ -34,8 +34,10 @@ Scripts add the repo root to `sys.path` (Spyder works too) and read cached array
 
 ## Just want the escape-fraction numbers?
 
-`fesc_data_for_users/` ships the results as CSVs (`matched_pairs.csv`, `fesc_per_region.csv`)
-— no pipeline or large data needed. To regenerate them from the `.npy` arrays:
+**`fesc_data_for_users/` ships the results as CSVs (`matched_pairs.csv`, `fesc_per_region.csv`)
+— no pipeline or large data needed!**
+
+However, if you'd like to regenerate them from the `.npy` arrays (and if you have them):
 
 ```
 cd fesc_data_for_users
