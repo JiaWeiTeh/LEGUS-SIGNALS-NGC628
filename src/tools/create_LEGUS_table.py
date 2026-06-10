@@ -48,6 +48,8 @@ def create_LEGUS_table():
     # =============================================================================
     # Read file
     # =============================================================================
+    # FoV polygons are constant across rows -- build them once, not per row.
+    fov1, fov2 = draw_FOV.FOV()
     with open(path2sc) as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         # skip 1st row
@@ -70,8 +72,7 @@ def create_LEGUS_table():
             # check if ra and dec is in the FOV.
             ra = float(row[4])
             dec = float(row[5])
-            fov1, fov2 = draw_FOV.FOV()
-            if not (point_inside_polygon(ra, dec, fov1) or 
+            if not (point_inside_polygon(ra, dec, fov1) or
                 point_inside_polygon(ra, dec, fov2)):
                 continue
             # remove '#' column that indicates replication

@@ -523,18 +523,13 @@ for ii, (LHa, QH0_pdf) in enumerate(tqdm(zip(10**(LHa_log_n), qh0_total_pdf_n)))
     QH0_pdf = kde_sp.pdf(QH0_range)
     # probability sum to 1
     QH0_pdf = QH0_pdf/sum(QH0_pdf)
-    # create temporary array to store cluster details
-    temp = np.zeros(shape = (n_esc)-1)
-    
-    for jj, f_esc in enumerate(f_esc_range):
-        # QH0 corresponding to a given LHa and f_esc
-        Qh0_condition = np.log10(7.31e11*LHa/(1-f_esc))
-        # individual probability
-        probability = np.interp(Qh0_condition, QH0_range, QH0_pdf)
-        if probability == 0 or np.log(probability) < very_small:
-            temp[jj] = very_small
-        else:
-            temp[jj] = np.log(probability)
+    # QH0 implied by each f_esc, and its probability under the (KDE) QH0 distribution
+    Qh0_condition = np.log10(7.31e11*LHa/(1-f_esc_range))
+    probability = np.interp(Qh0_condition, QH0_range, QH0_pdf)
+    # log-probability, floored at `very_small` (also where probability == 0)
+    with np.errstate(divide='ignore'):
+        logp = np.log(probability)
+    temp = np.where((probability == 0) | (logp < very_small), very_small, logp)
     
     overall[ii] = temp
     # initiate with nan so we can np.nansum afterwards

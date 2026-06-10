@@ -47,15 +47,16 @@ def create_SIGNALS_table():
     # the fits
     fits_data = fits.open(path2h2)[0].data
     
-    # create array to store catalogue. 
+    # create array to store catalogue.
     h2_cat_1234 = []
-    
+
+    # FoV polygons are constant across rows -- build them once, not per row.
+    fov1, fov2 = draw_FOV.FOV()
     for row in fits_data:
         ra = float(row[1])
         dec = float(row[2])
-        fov1, fov2 = draw_FOV.FOV()
         # check if HII region is in LEGUS FOV
-        if not (point_inside_polygon(ra, dec, fov1) or 
+        if not (point_inside_polygon(ra, dec, fov1) or
             point_inside_polygon(ra, dec, fov2)):
             continue
         h2_cat_1234.append(np.array(row))

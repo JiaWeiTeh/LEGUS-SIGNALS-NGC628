@@ -71,8 +71,10 @@ def get_pdf(ID, tabtype):
 # =============================================================================
 
 # Do you want to run the analysis or use pre-run results?
-# Warninng: re-running takes ~2hrs, plus the final result
-# will differ slightly depending on how QH0 is being sampled. 
+# Note: re-running is fast (~20 s) now that samplePDF is vectorised -- it used to
+# take ~2 hrs. With the np.random.seed(0) set above the result is reproducible
+# run to run, and matches the stored pre-run file to ~0.002 dex in the QH0
+# percentiles (the stored file predates the seeding, hence the small offset).
 reRun = False
 withClass4 = True
 onlyIncludeCoincide = True

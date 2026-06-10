@@ -42,6 +42,12 @@ def samplePDF(xvalues, pdf, niter=int(1e5)):
     r1 = (-c[q] + disc) / m[q]
     r2 = (-c[q] - disc) / m[q]
     montecarlos[q] = np.where((r1 > a0[q]) & (r1 < b0[q]), r1, r2)
+    # finite-guard: every draw must lie within its own bin [a0, b0]. In rare
+    # near-flat bins the in-bin root can round just outside the bracket, making
+    # the selection above fall through to the quadratic's far (huge) root, which
+    # later overflows 10**x to inf. Clipping to the bin is a no-op for every
+    # in-bin draw and pins those rare escapes back to the bin edge.
+    montecarlos = np.clip(montecarlos, a0, b0)
     return montecarlos
 
 def prob2pdf(xvalues, pdf):
