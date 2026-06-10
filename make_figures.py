@@ -17,8 +17,8 @@ Usage (run from anywhere — paths resolve relative to this file):
 A failing script does not stop the others: a summary is printed at the end and the
 process exits non-zero if any script failed.
 
-Note: ``fg10_clusterstatistics.py`` ships with ``reRun = True`` and regenerates heavy
-Monte-Carlo arrays — it needs the full ``src/dat/`` bundle (see DATA.md) and is slow.
+The scripts read their pre-computed arrays from ``src/dat/`` (each has ``reRun = False``);
+they do not regenerate the heavy Monte-Carlo data. See DATA.md for the ``src/dat/`` bundle.
 """
 import re
 import subprocess

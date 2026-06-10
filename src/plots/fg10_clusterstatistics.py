@@ -170,8 +170,8 @@ for ii, (LHa, f_esc, ID) in enumerate(zip(LHa_log_n, f_esc_pdf_n, h2ID_n)):
     sigma1.append(percentiles)
     ext.append(read_catalogue.get_h2_param(ID, 'ext'))
     rGalac.append(read_catalogue.get_h2_param(ID, 'rGalac'))
-        
-reRun = True
+
+reRun = False
 
 if reRun:
     masslist = np.zeros(shape = len(h2ID_n), dtype = np.ndarray)
