@@ -46,7 +46,9 @@ python extract_fesc_data.py --dat ../src/dat --out .
 
 `fesc_per_region.csv` gives, per region, L_Hα, Q(H⁰), and
 `f_esc = (Q(H⁰) − L_Hα·7.31e11) / Q(H⁰)` with percentiles; filter on `passes_QH0_cut == 1`
-before averaging. See [`fesc_data_for_users/README.md`](fesc_data_for_users/README.md).
+before averaging. **Every column in both CSVs is defined in
+[`fesc_data_for_users/README.md`](fesc_data_for_users/README.md)**, along with the f_esc
+definition and the quality cut.
 
 ## Layout
 
