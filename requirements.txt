@@ -1,0 +1,9 @@
+numpy
+scipy
+matplotlib
+astropy
+shapely
+PyAstronomy
+cmasher
+tqdm
+opencv-python

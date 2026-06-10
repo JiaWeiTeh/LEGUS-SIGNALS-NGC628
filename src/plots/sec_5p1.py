@@ -11,6 +11,16 @@ This script looks at the regions that neither associated with 1,2,3,4 soruces.
 
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
+from src.tools.geometry import point_inside_polygon
 import src.tools.draw_FOV as draw_FOV
 import csv
 #--
@@ -18,7 +28,7 @@ import src.tools.read_catalogue as read_catalogue
 from src.tools.create_combined_table import d2r, a2d, pc2arc, arc2pc, ang_dist
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 _, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 
 numberOfEmptyRegions = 0 
@@ -29,40 +39,6 @@ overlapWithClass0 = 0
 # =============================================================================
 # First define a helper function
 
-def point_inside_polygon(x,y,poly):
-    """
-    Helper function which returns if points (x,y) is inside a polygon or not
-    See: https://stackoverflow.com/questions/36399381/whats-the-fastest-way-of-checking-if-a-point-is-inside-a-polygon-in-python
-
-    Parameters
-    ----------
-    x : float
-        x location.
-    y : float
-        y location.
-    poly : list
-        Polygon list.
-
-    Returns
-    -------
-    inside : boolean
-        Is the given point within the polygon?
-
-    """
-    n = len(poly)
-    inside =False
-    p1x,p1y = poly[0]
-    for i in range(n+1):
-        p2x,p2y = poly[i % n]
-        if y > min(p1y,p2y):
-            if y <= max(p1y,p2y):
-                if x <= max(p1x,p2x):
-                    if p1y != p2y:
-                        xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
-                    if p1x == p2x or x <= xinters:
-                        inside = not inside
-        p1x,p1y = p2x,p2y
-    return inside
 
 
 def create_LEGUS_table_wclass0():
@@ -76,7 +52,7 @@ def create_LEGUS_table_wclass0():
 
     """
     # path to catalogue
-    path2sc = r'/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/LEGUS/Catalog.csv'
+    path2sc = paths.LEGUS + "Catalog.csv"
     
     # create array to store catalogue. 
     sc_cat_01234 = []
@@ -118,7 +94,7 @@ def create_LEGUS_table_wclass0():
     # Save table
     # =============================================================================
     # file
-    path2csv = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/LEGUS/"
+    path2csv = paths.LEGUS
     # svae
     np.savetxt(path2csv+'sc1234_valid_NGC628_wClass0.csv', sc_cat_01234, delimiter=',')
     
@@ -152,14 +128,3 @@ for h2 in h2_catalogue:
                     break
     
 print(f"There are {numberOfEmptyRegions} HII regions with nothing in them, and {overlapWithClass0} of them has at least one Class 0.")
-        
-
-
-
-
-
-
-
-
-
-

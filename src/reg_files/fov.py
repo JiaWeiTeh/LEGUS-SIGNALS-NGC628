@@ -10,11 +10,20 @@ This script creates .reg files for LEGUS FOV for visualisation in Ds9
 
 # libraries
 from PyAstronomy.pyasl import coordsDegToSexa
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 #--
 import src.tools.draw_FOV as draw_FOV
 
 # path to store .reg files
-path2reg = r'/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/'
+path2reg = paths.DAT
 # create .reg file
 reg_file = open(path2reg+"LEGUS_newfov.reg","w+")
 

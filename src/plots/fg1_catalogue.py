@@ -9,6 +9,15 @@ This script plots the FoV of the combined catalogue. See Figure 1.
 """
 # libraries
 import matplotlib.pyplot as plt
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import numpy as np
 from matplotlib import transforms
 import pylab
@@ -20,7 +29,7 @@ import src.tools.plot_tools as plot_tools
 from src.tools.create_combined_table import d2r, a2d, pc2arc, arc2pc, ang_dist
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 
 # Initiate lists
@@ -209,7 +218,6 @@ ax.add_patch(Rectangle((24.2218, 15.7835), .0024, .0027,
 
 # save
 plot_tools.save("Catalogue")
-plt.show()
 
 
 # =============================================================================

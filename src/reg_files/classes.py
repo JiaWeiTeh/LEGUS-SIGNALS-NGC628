@@ -12,19 +12,28 @@ This script saves class 4 star clusters into .reg file
 
 # libraries
 from PyAstronomy.pyasl import coordsDegToSexa
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import numpy as np
 #--
 import src.tools.read_catalogue as read_catalogue
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 qtab, mtab, atab = np.load(path2save+"clusterslug_table_phi073_apn1_geneva_1234.npy", allow_pickle = True)
 clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 # Unravel (see fg5_LHa_vs_QH0.py for more details)
 f_esc_pdf, f_esc_percentiles, qh0_total_pdf, qh0_percentile, LHa_log, h2ID, median_mass = list(zip(*clusterdata))
 # path to region files
-path2reg = r'/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/'
+path2reg = paths.DAT
 
 # list of associated clusters
 assoc_sc_list = []

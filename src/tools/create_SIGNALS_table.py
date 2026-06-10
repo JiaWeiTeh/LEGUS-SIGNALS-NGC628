@@ -11,6 +11,16 @@ analysis. Note that this table contains all Class 1, 2, 3 and 4 HII regions.
 
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
+from src.tools.geometry import point_inside_polygon
 from astropy.io import fits
 #--
 import src.tools.draw_FOV as draw_FOV
@@ -27,43 +37,9 @@ def create_SIGNALS_table():
 
     """
     
-    def point_inside_polygon(x,y,poly):
-        """
-        Helper function which returns if points (x,y) is inside a polygon or not
-        See: https://stackoverflow.com/questions/36399381/whats-the-fastest-way-of-checking-if-a-point-is-inside-a-polygon-in-python
-    
-        Parameters
-        ----------
-        x : float
-            x location.
-        y : float
-            y location.
-        poly : list
-            Polygon list.
-    
-        Returns
-        -------
-        inside : boolean
-            Is the given point within the polygon?
-    
-        """
-        n = len(poly)
-        inside =False
-        p1x,p1y = poly[0]
-        for i in range(n+1):
-            p2x,p2y = poly[i % n]
-            if y > min(p1y,p2y):
-                if y <= max(p1y,p2y):
-                    if x <= max(p1x,p2x):
-                        if p1y != p2y:
-                            xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
-                        if p1x == p2x or x <= xinters:
-                            inside = not inside
-            p1x,p1y = p2x,p2y
-        return inside
     
     # path to catalogue
-    path2h2 = r'/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/SIGNALS/NGC628_catalog_WCS_corr.fits'
+    path2h2 = paths.SIGNALS + "NGC628_catalog_WCS_corr.fits"
     
     # =============================================================================
     # Read file
@@ -85,13 +61,3 @@ def create_SIGNALS_table():
         h2_cat_1234.append(np.array(row))
         
     return h2_cat_1234
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

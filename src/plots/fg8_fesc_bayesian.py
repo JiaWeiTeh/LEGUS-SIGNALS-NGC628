@@ -10,6 +10,16 @@ Bayesian technique. See Figure 8.
 """
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
+from src.tools.stats import medianPDF, prob2pdf
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 from tqdm import tqdm
@@ -17,7 +27,7 @@ from tqdm import tqdm
 import src.tools.plot_tools as plot_tools
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 _, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 
@@ -145,14 +155,6 @@ overall = np.sum(overall, axis = 0)
 HaHigh = np.nansum(HaHigh, axis = 0)
 HaLow = np.nansum(HaLow, axis = 0)
 
-def prob2pdf(xvalues, pdf):
-    """Converts probability function into probability density function"""
-    # sum probability
-    sumprob = sum(abs(xvalues[1]-xvalues[0])*(pdf[1:]+pdf[:-1])/2)
-    # normalisation constant
-    norm = 1/sumprob
-    # return
-    return pdf * norm
 
 overall_pdf = prob2pdf(f_esc_range, np.exp(overall.astype(float)))
 HaHigh_pdf = prob2pdf(f_esc_range, np.exp(HaHigh.astype(float)))
@@ -199,14 +201,6 @@ plt.vlines(0, 0, 20, linestyles = '--', color = 'k')
 # Print plot statistics in Latex-readable table format
 # =============================================================================
 
-def medianPDF(xvalues, pdf):
-    """Given xvalues and a pdf, return median and 1-sigma uncertainty """
-    pdfsum = np.cumsum(pdf)*(xvalues[1]-xvalues[0])
-    percentiles = np.array([
-        xvalues[np.argmax(np.greater(pdfsum, 0.159))],
-        xvalues[np.argmax(np.greater(pdfsum, 0.5))],
-        xvalues[np.argmax(np.greater(pdfsum, 0.841))]])
-    return percentiles
 
 print("Here are the median and 1-sigma uncertainty values for Low-, High-, and Overall LHa bins")
 print(plot_tools.latexReadable(*medianPDF(f_esc_range, HaLow_pdf))+"&"+\
@@ -215,4 +209,3 @@ print(plot_tools.latexReadable(*medianPDF(f_esc_range, HaLow_pdf))+"&"+\
       )
 
 plot_tools.save("GenKroupc1234Fesc_Bayesian")
-

@@ -11,6 +11,15 @@ calculations for Section 3.1, 3.2.
 """
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import matplotlib.pyplot as plt
 #--
 import src.tools.read_catalogue as read_catalogue
@@ -18,7 +27,7 @@ import src.tools.plot_tools as plot_tools
 from src.tools.create_combined_table import d2r, pc2arc, arc2pc, ang_dist
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 
 # Create array to store distances to cluster for every HII region.

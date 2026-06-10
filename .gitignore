@@ -13,3 +13,7 @@ __pycache__/
 .spyproject/
 PATCH_PLAN.md
 reset_git.sh
+# review-before-delete holding area
+del/
+src/figs_backup/
+

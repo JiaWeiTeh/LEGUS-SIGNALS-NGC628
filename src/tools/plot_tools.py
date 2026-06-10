@@ -10,6 +10,15 @@ This script contains some useful plotting functions.
 
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 
@@ -235,7 +244,7 @@ def plot_bar(x, ax=None,
 # save figure
 def save(filename, ext = '.pdf', transparent = True):
     """Saves figure"""
-    path = "/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/figs/"
+    path = paths.FIGS
     savefile = path + filename + ext
     plt.savefig(savefile, bbox_inches='tight', transparent = transparent)
     print(f"Figure saved in {savefile}")

@@ -10,12 +10,23 @@ This script calculates the full ionisation budget in the FoV.
 
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
+from src.tools.stats import samplePDF
+np.random.seed(0)  # reproducible Monte-Carlo (Patch 4: seeded)
 from tqdm import tqdm
 #--
 import src.tools.read_catalogue as read_catalogue
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 qtab, mtab, atab = np.load(path2save+"clusterslug_table_phi073_apn1_geneva_1234.npy", allow_pickle = True)
@@ -54,59 +65,6 @@ def get_pdf(ID, tabtype):
     return range_log, pdf
 
 # Helper function to sample PDF
-def samplePDF(xvalues, pdf, niter):
-    """ This function creates pdf that is not spiky (smoothes out the pdf).
-    Solves problems arising from the 'delta-function' monte carlo approach.
-    Then, it picks 10**5 samples from the pdf."""
-    
-    def normalisePDF(a, b, m, c):
-        """Given xs and ys value of a bin, find the normalisation factor"""
-        area = 1/2 * (a[1]+b[1])*abs(a[0]-b[0])
-        return 1/area
-        
-    def line_func(p1, p2):
-        """ Given two points, return the line coefficients m, c in y = mx + c"""
-        m = (p1[1]-p2[1])/(p1[0]-p2[0])
-        c = p1[1] - m * p1[0]
-        return m, c
-
-    # The probability of landing into one of the bins
-    probability = abs(xvalues[1]-xvalues[0]) * (pdf[1:]+pdf[:-1])/2
-    # normalize to bypass error tolerence 
-    probability = probability/np.sum(probability)
-    # pick a choice. which bin (left)? Number of iterations?
-    # left means the selected bin is identified by the left side of the bin.
-    niter = niter
-    selectbin = np.random.choice(xvalues[:-1], p = probability, size = niter)
-    # pick random number between [0, 1)
-    rand_uni = np.random.uniform(0,1,niter)
-    # array for montecarlo pdf values
-    montecarlos = np.zeros(shape = (len(selectbin)))
-    # For each selected bin,    
-    for ii, bins in enumerate(selectbin):
-        binindex = np.where(xvalues == bins)[0][0]
-        # get the two points representing this bin
-        a = (xvalues[binindex], pdf[binindex])
-        b = (xvalues[binindex+1],pdf[binindex+1])
-        # get coeffs of the line equation, m and c in y = mx + c
-        m, c = line_func(a, b)
-        # normalisation factor
-        norm = normalisePDF(a, b, m, c)
-        # solve for the y-value in the bin that corresponds to the uniform distribution
-        roots = np.roots([m/2,\
-                  c,\
-                  -( m / 2 * a[0]**2  + c * a[0]  + rand_uni[ii]/norm )])
-        # the correct root is within the bin
-        hasroot = False
-        # search for the correct solution in given roots
-        for r in roots:
-            if r < b[0] and r > a[0]:
-                hasroot = True
-                montecarlos[ii] = r
-        if not hasroot:  
-            raise Exception("Root not found")
-    # return
-    return montecarlos
 
 # =============================================================================
 # # For star clusters,
@@ -197,7 +155,3 @@ print(np.log10(qHa))
 # =============================================================================
 f_esc = (10**qh0_percentile - qHa)/(10**qh0_percentile)
 print(f'The escape frasction has median value of {f_esc[1]}')
-
-
-
-

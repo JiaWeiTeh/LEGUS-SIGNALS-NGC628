@@ -2,6 +2,17 @@
 """This script provides visualisation of the resolution difference."""
 
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore", message="FixedFormatter")  # benign: tick labels set without explicit set_*ticks
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import cv2
 import src.tools.plot_tools as plot_tools
 import numpy as np
@@ -9,7 +20,7 @@ import numpy as np
 # =============================================================================
 # Image 1 from HST
 # =============================================================================
-img2 = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/resolution_check2_2.png"
+img2 = paths.DAT + "resolution_check2_2.png"
 img2 = cv2.imread(img2)
 y, x = 500, 550
 size = int(400)
@@ -20,7 +31,7 @@ crop_img_2 = cv2.cvtColor(crop_img_2, cv2.COLOR_BGR2RGB)
 # =============================================================================
 # Image 2 from SIGNALS
 # =============================================================================
-img1 = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/resolution_check2_1.png"
+img1 = paths.DAT + "resolution_check2_1.png"
 img1 = cv2.imread(img1)
 y, x = 550, 550
 size = int(380)
@@ -158,7 +169,7 @@ plot_tools.save("resolution_check_comparison", ext = '.pdf')
 # =============================================================================
 # Image 1 from HST
 # =============================================================================
-img1 = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/resolution_check3_1.png"
+img1 = paths.DAT + "resolution_check3_1.png"
 img1 = cv2.imread(img1)
 x, y = 600, 600
 size = int(250)
@@ -172,7 +183,7 @@ crop_img_1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
 # =============================================================================
 # Image 2 from SIGNALS
 # =============================================================================
-img2 = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/resolution_check3_2.png"
+img2 = paths.DAT + "resolution_check3_2.png"
 img2 = cv2.imread(img2)
 x, y = 610, 610
 size = int(230)

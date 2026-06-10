@@ -11,6 +11,15 @@ of star clusters and HII regions. See Figure 10.
 
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import matplotlib.pyplot as plt
 import cmasher as cmr
 #--
@@ -18,12 +27,12 @@ import src.tools.plot_tools as plot_tools
 import src.tools.read_catalogue as read_catalogue
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 
 # For AV
-path2lib = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/SLUG2/cluster_slug/"
+path2lib = paths.SLUG_CLUSTER
 # stellar track?
 track = '_modc020'
 classes = '_1234'

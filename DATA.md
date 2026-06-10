@@ -30,3 +30,8 @@ With `lib/` populated and the environment from `requirements.txt`, run the table
 builders in `src/tools/` (e.g. `create_combined_table`) and the `src/plots/fg*` scripts
 from the repo root (see the README for invocation). The `*.npy` outputs are rebuilt
 into `src/dat/`.
+
+## Getting the data
+
+The git-ignored files above (the `src/dat/` post-processed arrays and the SLUG2 model
+libraries) can be provided on request — contact Jia Wei Teh at jiaweiteh.astro@gmail.com.

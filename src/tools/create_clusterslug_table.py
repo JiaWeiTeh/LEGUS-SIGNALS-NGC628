@@ -10,9 +10,18 @@ This script extracts data from the output of cluster_slug
 # -*- coding: utf-8 -*-
 
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 
 # path to clusterslug libraries
-path2lib = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/SLUG2/cluster_slug/"
+path2lib = paths.SLUG_CLUSTER
 
 # =============================================================================
 # Create table
@@ -43,7 +52,7 @@ def create_clusterslug_table(stellarTrack = 'geneva',
     
     
     # save table to avoid computing time in the future
-    path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+    path2save = paths.DAT
     np.save(path2save+"clusterslug_table_phi073_apn1_"+stellarTrack+classes+".npy", np.array([qtab, mtab, atab]))
     
     return qtab, mtab, atab
@@ -53,7 +62,7 @@ def create_clusterslug_table(stellarTrack = 'geneva',
 # For AV
 import numpy as np
 import matplotlib.pyplot as plt
-path2lib = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/lib/SLUG2/cluster_slug/"
+path2lib = paths.SLUG_CLUSTER
 # stellar track?
 track = '_modc020'
 classes = '_1234'

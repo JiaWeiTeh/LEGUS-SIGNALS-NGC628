@@ -11,6 +11,15 @@ presentation (oral/poster).
 """
 # libraries
 import numpy as np
+# --- allow running this file directly: put repo root on sys.path ---
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while not _os.path.isdir(_os.path.join(_root, "src")) and _root != _os.path.dirname(_root):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+# ------------------------------------------------------------------
+from src import paths
 import matplotlib.pyplot as plt
 import scipy.stats 
 #--
@@ -18,7 +27,7 @@ import src.tools.plot_tools as plot_tools
 import src.tools.read_catalogue as read_catalogue
 
 # Read in catalogue
-path2save = r"/Users/jwt/Documents/Code/LEGUS-SIGNALS-NGC628/src/dat/"
+path2save = paths.DAT
 _, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
 clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 
