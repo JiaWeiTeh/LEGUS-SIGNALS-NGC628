@@ -51,7 +51,7 @@ path2save = paths.DAT
 
 # =============================================================================
 # Do you want to run the analysis or use pre-run results?
-# Warninng: re-running takes ~50mins, plus the final result
+# Warning: re-running takes ~50mins, plus the final result
 # will differ slightly depending on how QH0 is being sampled. 
 # =============================================================================
 reRun = False

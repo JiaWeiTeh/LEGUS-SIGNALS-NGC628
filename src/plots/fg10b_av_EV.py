@@ -25,6 +25,7 @@ import cmasher as cmr
 #--
 import src.tools.plot_tools as plot_tools
 import src.tools.read_catalogue as read_catalogue
+np.random.seed(0)  # reproducible Monte-Carlo (Patch 4: seeded)
 
 # Read in catalogue
 path2save = paths.DAT
@@ -452,11 +453,6 @@ for f_esc in f_esc_pdf_n:
 
 m_ratio_x = m_ext_y/m_ext_x
 s_ratio_x = s_ext_y/s_ext_x
-
-# get uncertainty in a very wonky way by looking at the product from
-# dividing largest value over smallest value.
-
-m_std = ext_LEGUS - 
 
 
 fig, ax =  plt.subplots(1, 1, figsize = (10,10), dpi = 300)

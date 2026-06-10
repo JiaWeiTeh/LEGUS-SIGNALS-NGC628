@@ -103,7 +103,7 @@ def get_sc_param(ID, colname, sctable = sc_catalogue):
         raise Exception("ID does not exist")
         return
     except (IndexError, KeyError):
-        raise Exception("Column name not cound. Please ensure header is either"+
+        raise Exception("Column name not found. Please ensure header is either"+
               " of the following: 'ID','x','y', 'RA', 'DEC',"+
                            "'UV', 'dUV', 'U', 'dU',"+
                           " 'B', 'dB', 'V', 'dV', 'I', 'dI', "+
@@ -134,7 +134,7 @@ def get_h2_param(ID, colname, h2table = h2_catalogue):
         raise Exception("ID does not exist")
         return
     except (IndexError, KeyError):
-        raise Exception("Column name not cound. Please ensure header is either"+
+        raise Exception("Column name not found. Please ensure header is either"+
               " of the following: 'ID','RA','DEC', 'rGalac',"+
                                  "'LHa', 'HaDIG', 'class',"+
                                  "'I0', 'Amp', 'sig', 'alpha', 'R2',"+

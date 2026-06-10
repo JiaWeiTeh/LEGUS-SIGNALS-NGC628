@@ -26,10 +26,18 @@ piece is and where it belongs, so the pipeline can be reproduced on another mach
 
 ## Regenerating the derived data
 
-With `lib/` populated and the environment from `requirements.txt`, run the table
-builders in `src/tools/` (e.g. `create_combined_table`) and the `src/plots/fg*` scripts
-from the repo root (see the README for invocation). The `*.npy` outputs are rebuilt
-into `src/dat/`.
+`combined_catalogue.npy` needs only the bundled LEGUS + SIGNALS catalogues — no SLUG2
+data. Its builder has no command-line entry point, so call the function from the repo
+root:
+
+```
+python -c "from src.tools.create_combined_table import create_combined_table as f; f()"
+```
+
+The clusterslug PDF tables and the heavy Monte-Carlo `*LHa_QH0_noCons*.npy` arrays
+additionally require the SLUG2 libraries under `lib/SLUG2/`; the latter are produced by
+the `src/plots/fg*` scripts themselves (e.g. `fg5_LHa_vs_QH0.py` with its `reRun` flag),
+not by `src/tools/`. All `*.npy` outputs land in `src/dat/`.
 
 ## Getting the data
 

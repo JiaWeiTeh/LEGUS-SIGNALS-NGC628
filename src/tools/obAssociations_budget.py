@@ -157,4 +157,4 @@ print(np.log10(qHa))
 # # the escape fraction
 # =============================================================================
 f_esc = (10**qh0_percentile - qHa)/(10**qh0_percentile)
-print(f'The escape frasction has median value of {f_esc[1]}')
+print(f'The escape fraction has median value of {f_esc[1]}')
