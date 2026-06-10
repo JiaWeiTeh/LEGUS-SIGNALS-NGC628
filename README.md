@@ -4,9 +4,9 @@ Analysis code and figures for **Teh et al. (2023)**, "Constraining the LyC escap
 from LEGUS star clusters with SIGNALS H II region observations: a pilot study of NGC 628,"
 *MNRAS* **524**, 1191.
 
-[ADS](https://ui.adsabs.harvard.edu/abs/2023MNRAS.524.1191T/abstract) ·
-[arXiv:2306.05457](https://arxiv.org/abs/2306.05457) ·
-[doi:10.1093/mnras/stad1780](https://doi.org/10.1093/mnras/stad1780)
+[![ADS](https://img.shields.io/badge/ADS-2023MNRAS.524.1191T-1f6feb.svg)](https://ui.adsabs.harvard.edu/abs/2023MNRAS.524.1191T/abstract)
+[![arXiv](https://img.shields.io/badge/arXiv-2306.05457-b31b1b.svg)](https://arxiv.org/abs/2306.05457)
+[![DOI](https://img.shields.io/badge/DOI-10.1093%2Fmnras%2Fstad1780-blue.svg)](https://doi.org/10.1093/mnras/stad1780)
 
 ## Install
 
