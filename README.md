@@ -9,6 +9,17 @@ Analysis code and figure-generating scripts for:
 > [arXiv:2306.05457](https://arxiv.org/abs/2306.05457) ·
 > [doi:10.1093/mnras/stad1780](https://doi.org/10.1093/mnras/stad1780)
 
+## Install
+
+Python 3.10+:
+
+```
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+(Optional: a system LaTeX install is needed for `usetex` figure rendering.)
+
 ## Quick start: escape-fraction data
 
 Just want the matched catalogue and f_esc values, without the full pipeline? Run the
@@ -51,15 +62,6 @@ Filter on `passes_QH0_cut == 1` before averaging f_esc. Columns:
 </ul>
 
 ## Setup & run
-
-Install dependencies (Python 3.10+):
-
-```
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-(Optional: a system LaTeX install is needed for `usetex` figure rendering.)
 
 ### Reproduce all figures (start here)
 

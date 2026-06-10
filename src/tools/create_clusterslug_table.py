@@ -53,7 +53,10 @@ def create_clusterslug_table(stellarTrack = 'geneva',
     
     # save table to avoid computing time in the future
     path2save = paths.DAT
-    np.save(path2save+"clusterslug_table_phi073_apn1_"+stellarTrack+classes+".npy", np.array([qtab, mtab, atab]))
+    # np.stack requires the three tables to share a shape (they always should) and
+    # yields the identical (3, R, C) array, but fails loudly instead of silently
+    # building a ragged object array if they ever diverge.
+    np.save(path2save+"clusterslug_table_phi073_apn1_"+stellarTrack+classes+".npy", np.stack([qtab, mtab, atab]))
     
     return qtab, mtab, atab
 

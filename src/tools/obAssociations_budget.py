@@ -28,7 +28,6 @@ import src.tools.read_catalogue as read_catalogue
 # Read in catalogue
 path2save = paths.DAT
 sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
-clusterdata = np.load(path2save+"GenKroupc1234LHa_QH0_noCons.npy", allow_pickle = True)
 qtab, mtab, atab = np.load(path2save+"clusterslug_table_phi073_apn1_geneva_1234.npy", allow_pickle = True)
 
 # =============================================================================
@@ -130,7 +129,9 @@ elif not reRun:
             montecarlo_across = np.load(path2save+"obAssociations_budget_wClass4.npy", allow_pickle = True)
 
     else:
-        _, montecarlo_across = np.load(path2save+"obAssociations_budget.npy", allow_pickle = True)
+        # 1-D array, matching np.save above and the two sibling branches (the stray
+        # `_,` unpack assumed a 2-element file and crashed on the saved 1-D array)
+        montecarlo_across = np.load(path2save+"obAssociations_budget.npy", allow_pickle = True)
         
 # Final cleanup
 qh0_percentile = np.log10(np.percentile(montecarlo_across,  (15.9, 50, 84.1)))
