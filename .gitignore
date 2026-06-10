@@ -1,0 +1,15 @@
+# raw SLUG2 model library — large, kept locally (see DATA.md)
+lib/SLUG2/
+
+# pipeline-generated arrays & figures — regenerated locally, not versioned
+*.npy
+src/figs/
+*.pdf
+
+# python / editor / OS cruft
+__pycache__/
+*.pyc
+.DS_Store
+.spyproject/
+PATCH_PLAN.md
+reset_git.sh
