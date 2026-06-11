@@ -19,6 +19,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 
@@ -316,7 +317,7 @@ def plot_studies(ax = None):
                 50.53])
     
     NGC7793y = 10**(NGC7793y)
-    NGC7793y = NGC7793y/7.31e11
+    NGC7793y = NGC7793y/constants.QHA_PER_LHA
     NGC7793y = np.log10(NGC7793y)
     
     # make the scatter

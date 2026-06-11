@@ -19,6 +19,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 from src.tools.read_catalogue import is_BPTStarforming
 from src.tools.stats import samplePDF
 np.random.seed(0)  # reproducible Monte-Carlo (Patch 4: seeded)
@@ -171,7 +172,7 @@ for h2 in h2_catalogue:
     
     total_LHa += LHa
 
-total_qHa = total_LHa *  7.31e11
+total_qHa = total_LHa *  constants.QHA_PER_LHA
 f_esc = (np.array(qh0_total_pdf) - total_qHa)/np.array(qh0_total_pdf)
 plt.hist(f_esc, bins = 100)
 

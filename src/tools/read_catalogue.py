@@ -22,7 +22,14 @@ from src import paths
 #--
 # Read in catalogue
 path2save = paths.DAT
-sc_catalogue, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
+_cat_file = path2save + "combined_catalogue.npy"
+if not _os.path.exists(_cat_file):
+    raise FileNotFoundError(
+        _cat_file + " not found. Build it first from the bundled LEGUS/SIGNALS "
+        "catalogues (no SLUG2 data needed):\n"
+        '    python -c "from src.tools.create_combined_table import create_combined_table as f; f()"\n'
+        "See DATA.md.")
+sc_catalogue, h2_catalogue = np.load(_cat_file, allow_pickle=True)
 
 # Column-name -> index maps, built once at import. The accessors below are called
 # inside nested per-object loops across the pipeline; rebuilding the name array and

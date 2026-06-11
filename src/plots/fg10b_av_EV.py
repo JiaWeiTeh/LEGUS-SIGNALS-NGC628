@@ -20,6 +20,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 import matplotlib.pyplot as plt
 import cmasher as cmr
 #--
@@ -423,7 +424,7 @@ plot_scatter(s_ext_x, s_ext_y,
              )
 
 # plt.plot([0,2], [0,2], c = 'k', label = '1:1')
-plt.plot([0, 2], [0, 2*2.27], c = 'k', linestyle = '--', label = '$A_{V, \rm neb}/A_{V, \star}=2.27$')
+plt.plot([0, 2], [0, 2*constants.AV_NEB_OVER_STAR], c = 'k', linestyle = '--', label = '$A_{V, \rm neb}/A_{V, \star}=2.27$')
 # plt.plot([0, 2], [0, 2*2], c = 'k', linestyle = '-', label = '$A_{V, \rm neb}/A_{V, \star}=2$')
 
 # line fit simple
@@ -516,7 +517,7 @@ plot_scatter(s_ext_c, s_ratio_x,
 
 
 
-plt.axhline(2.27, 0, 10, linestyle = '--', zorder = 10, c = 'k', linewidth = 3,
+plt.axhline(constants.AV_NEB_OVER_STAR, 0, 10, linestyle = '--', zorder = 10, c = 'k', linewidth = 3,
             label = '$A_{V, \rm neb}/A_{V, \star}=2.27$'
             )
 

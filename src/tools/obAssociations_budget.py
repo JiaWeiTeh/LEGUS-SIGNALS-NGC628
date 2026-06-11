@@ -19,6 +19,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 from src.tools.stats import samplePDF
 np.random.seed(0)  # reproducible Monte-Carlo (Patch 4: seeded)
 from tqdm import tqdm
@@ -149,7 +150,7 @@ for h2 in h2_catalogue:
     if not np.isnan(newLHa):
         LHa += newLHa
 # Finally, convert to ionising photons, f_g = .73
-qHa = LHa *  7.31e11 / .73
+qHa = LHa *  constants.QHA_PER_LHA / .73
 print(np.log10(qHa))
 
 

@@ -6,6 +6,7 @@ obAssociations_budget. `samplePDF`'s `niter` is now a parameter (default 1e5) so
 single definition covers both the plot-script calls (2 args) and obAssociations (3 args).
 """
 import numpy as np
+from src import constants
 
 
 def samplePDF(xvalues, pdf, niter=int(1e5)):
@@ -84,9 +85,9 @@ def QH02LHa(QH0, A_V):
     """
     # 0.27 escaped
     # convert from QH0 to LHa (Lha = QH0/7.31e11) (Kenicutt 1998)
-    LHa = QH0*(1-0.27)/7.31e11
+    LHa = QH0*(1-0.27)/constants.QHA_PER_LHA
     # Nebula extinction from stellar extinction
-    Neb_AV = A_V * 2.27
+    Neb_AV = A_V * constants.AV_NEB_OVER_STAR
     # Extinction correction  A_V = -2.5log(L_ex/L_0)
     LHa_cor = 10**(Neb_AV/(-2.5)) * LHa
     

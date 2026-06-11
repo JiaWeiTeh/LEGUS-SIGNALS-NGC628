@@ -62,27 +62,20 @@ def create_clusterslug_table(stellarTrack = 'geneva',
 
 #%%
 
-# For AV
-import numpy as np
-import matplotlib.pyplot as plt
-path2lib = paths.SLUG_CLUSTER
-# stellar track?
-track = '_modc020'
-classes = '_1234'
+# For AV -- quick visual check of the av_table PDFs. Guarded so it runs only when this
+# file is executed directly (python src/tools/create_clusterslug_table.py), NOT on import
+# (it would otherwise read the ~80 MB av_table and draw 500 curves on every import).
+if __name__ == "__main__":
+    import matplotlib.pyplot as plt
 
-avtab = np.genfromtxt(path2lib + 'av_table_phi073_apn1' + track + classes + ".tab", skip_header = 1)
-    
-plt.figure()
-def create_overview(tabtype, ax):
-    x = tabtype[0,:]
-    pdfs = tabtype[1:,:]
-    for i in range(500):
-        ax.plot(x, -pdfs[i,:], alpha = .005)  
-        
-create_overview(avtab, plt.gca())
+    def create_overview(tabtype, ax):
+        x = tabtype[0, :]
+        pdfs = tabtype[1:, :]
+        for i in range(500):
+            ax.plot(x, -pdfs[i, :], alpha=.005)
 
-
-
-
-
-
+    track = '_modc020'
+    classes = '_1234'
+    avtab = np.genfromtxt(paths.SLUG_CLUSTER + 'av_table_phi073_apn1' + track + classes + ".tab", skip_header=1)
+    plt.figure()
+    create_overview(avtab, plt.gca())

@@ -10,6 +10,7 @@ import numpy as np
 import PyAstronomy.pyasl
 from shapely.geometry import Point, Polygon
 from sys import maxsize
+from src import constants
 
 
 def r2d(rad):
@@ -36,12 +37,12 @@ def r2a(rad):
     return d2a(r2d(rad))
 
 
-def pc2arc(radius, D = 9.9e6):
+def pc2arc(radius, D = constants.DIST_NGC628_PC):
     # distance to NGC 628
     return r2a(radius/D)
 
 
-def arc2pc(ang, D = 9.9e6):
+def arc2pc(ang, D = constants.DIST_NGC628_PC):
     # distance to NGC 628
     return a2r(ang)*D
 

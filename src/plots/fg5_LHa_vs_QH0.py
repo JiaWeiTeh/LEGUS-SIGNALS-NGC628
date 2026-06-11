@@ -20,6 +20,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 from src.tools.read_catalogue import is_BPTStarforming
 from src.tools.stats import samplePDF
 np.random.seed(0)  # reproducible Monte-Carlo (Patch 4: seeded)
@@ -63,7 +64,7 @@ def add_QH0_mcmc(scIDlist, LHa):
     # percentile
     qh0_percentile = np.log10(np.percentile(qh0_total_pdf,  (2.3, 15.9, 50, 84.1, 97.7)))
     # QHa corresponding to Lha (Kenicutt)
-    qHa = LHa *  7.31e11
+    qHa = LHa *  constants.QHA_PER_LHA
     # escape fraction PDF
     f_esc_pdf = (np.array(qh0_total_pdf) - qHa)/np.array(qh0_total_pdf)
     # percentile

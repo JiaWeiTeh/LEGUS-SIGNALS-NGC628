@@ -19,6 +19,7 @@ if _root not in _sys.path:
     _sys.path.insert(0, _root)
 # ------------------------------------------------------------------
 from src import paths
+from src import constants
 from src.tools.stats import medianPDF, prob2pdf
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
@@ -128,7 +129,7 @@ for ii, (LHa, QH0_pdf) in enumerate(tqdm(zip(10**(LHa_log_n), qh0_total_pdf_n)))
     # probability sum to 1
     QH0_pdf = QH0_pdf/sum(QH0_pdf)
     # QH0 implied by each f_esc, and its probability under the (KDE) QH0 distribution
-    Qh0_condition = np.log10(7.31e11*LHa/(1-f_esc_range))
+    Qh0_condition = np.log10(constants.QHA_PER_LHA*LHa/(1-f_esc_range))
     probability = np.interp(Qh0_condition, QH0_range, QH0_pdf)
     # log-probability, floored at `very_small` (also where probability == 0)
     with np.errstate(divide='ignore'):
