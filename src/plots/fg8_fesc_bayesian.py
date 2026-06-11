@@ -27,6 +27,25 @@ from tqdm import tqdm
 #--
 import src.tools.plot_tools as plot_tools
 
+# --- figure theme: "default" (published), "dark" (talk), "poster" ---
+THEME = "default"
+if THEME == "dark":
+    plt.style.use("dark_background")
+_THEME = {
+    "default": dict(figsize=(6, 5), ylabel="PDF",
+                    overall_c="k", overall_lw=3, overall_alpha=.7,
+                    high_c="b", high_alpha=None, low_c="c", low_alpha=None,
+                    vline_c="k", suffix=""),
+    "dark": dict(figsize=(6, 5), ylabel="PDF",
+                 overall_c="w", overall_lw=2, overall_alpha=None,
+                 high_c="orange", high_alpha=0.5, low_c="yellow", low_alpha=1,
+                 vline_c="w", suffix="_dark"),
+    "poster": dict(figsize=(5.5, 5), ylabel="Probability density function",
+                   overall_c="k", overall_lw=3, overall_alpha=.7,
+                   high_c="b", high_alpha=None, low_c="c", low_alpha=None,
+                   vline_c="k", suffix="_poster"),
+}[THEME]
+
 # Read in catalogue
 path2save = paths.DAT
 _, h2_catalogue  = np.load(path2save+"combined_catalogue.npy", allow_pickle = True)
@@ -160,29 +179,31 @@ HaLow_pdf = prob2pdf(f_esc_range, np.exp(HaLow.astype(float)))
 # =============================================================================
 # plot
 # =============================================================================
-fig, ax =  plt.subplots(1,1, figsize = (6,5), dpi = 210)
+fig, ax =  plt.subplots(1,1, figsize = _THEME["figsize"], dpi = 210)
 # Overall
 plot_tools.plot_plot(f_esc_range, overall_pdf, 
                 xlabel = "$f_{\\rm esc}$",
-                ylabel = "PDF",
-                c = 'k',
+                ylabel = _THEME["ylabel"],
+                c = _THEME["overall_c"],
                 xlim = (-0.2, 1),
                 ylim = (0, 9),
-                linewidth = 3,
-                alpha = .7,
+                linewidth = _THEME["overall_lw"],
+                alpha = _THEME["overall_alpha"],
                 zorder = 100,
                 setticks = [0.2, 4, 2, 4],
                 label = "Overall population",
                 )
 # High LHa bins
 plot_tools.plot_plot(f_esc_range, HaHigh_pdf, 
-                c = 'b',
+                c = _THEME["high_c"],
+                alpha = _THEME["high_alpha"],
                 linewidth = 2,
               label = "High $L_{\\rm H\\alpha}$ bin",
                 )
 # Low LHa bins
 plot_tools.plot_plot(f_esc_range, HaLow_pdf, 
-               c = 'c',
+               c = _THEME["low_c"],
+               alpha = _THEME["low_alpha"],
               label = "Low $L_{\\rm H\\alpha}$ bin",
                linewidth = 2,
                )
@@ -191,7 +212,7 @@ plt.legend(loc = 'upper right',
             fontsize = 11,
             labelspacing = .5,
             frameon = False)
-plt.vlines(0, 0, 20, linestyles = '--', color = 'k')
+plt.vlines(0, 0, 20, linestyles = '--', color = _THEME["vline_c"])
 
 # =============================================================================
 # Print plot statistics in Latex-readable table format
@@ -204,4 +225,4 @@ print(plot_tools.latexReadable(*medianPDF(f_esc_range, HaLow_pdf))+"&"+\
             plot_tools.latexReadable(*medianPDF(f_esc_range, overall_pdf))
       )
 
-plot_tools.save("GenKroupc1234Fesc_Bayesian")
+plot_tools.save("GenKroupc1234Fesc_Bayesian" + _THEME["suffix"])
